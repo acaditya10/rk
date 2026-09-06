@@ -1,73 +1,119 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, Palette, Gem, BadgeCheck, Users, Settings, Headphones } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { siteData } from "@/lib/data";
 
-const iconMap = [Palette, Gem, BadgeCheck, Users, Settings, Headphones];
-
 export default function WhyChooseUs() {
+  const topRow = siteData.benefits.slice(0, 3);
+  const bottomRow = siteData.benefits.slice(3, 6);
+
   return (
-    <section className="bg-ivory py-24 lg:py-32">
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.4fr] gap-14 lg:gap-24">
-          {/* Left */}
+    <section className="bg-ivory py-14 lg:py-20">
+      <div className="max-w-[1200px] mx-auto px-5 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+          {/* Left Side */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <p className="eyebrow text-terracotta mb-4">
-              Why Choose RK Interiors
-            </p>
-            <h2 className="text-[2rem] lg:text-[2.8rem] leading-[1.12] font-semibold text-charcoal mb-6">
-              Designed with intention.
+            <div className="flex items-center gap-4 mb-6">
+              <span className="eyebrow text-muted mb-0">Why Choose RK Interiors</span>
+              <div className="h-px w-10 bg-terracotta/40" />
+            </div>
+            <h2 className="text-[2.6rem] lg:text-[3.6rem] tracking-[-0.045em] leading-[1.0] font-semibold text-charcoal mb-6">
+              Designed with
+              <br />
+              intention.
               <br />
               Executed with{" "}
               <span className="serif-italic text-terracotta">precision.</span>
             </h2>
-            <p className="text-muted text-[15px] leading-relaxed mb-10 max-w-[420px]">
-              From the first sketch to the final handover, we manage the
-              details that turn a design into a finished space.
+            <p className="text-muted text-[15px] leading-[1.6] mb-6 max-w-[400px]">
+              From the first sketch to the final handover, we manage every
+              detail that turns a design into a finished space.
             </p>
             <a
               href="#about"
-              className="inline-flex items-center gap-2.5 border border-charcoal text-charcoal text-[15px] font-medium px-7 py-3.5 rounded-full hover:bg-charcoal hover:text-white transition-all duration-300 group"
+              className="inline-flex items-center gap-2 text-terracotta text-[14px] font-medium border-b border-terracotta/40 pb-1 hover:border-terracotta transition-colors duration-300 group"
             >
               Learn More About Us
-              <ArrowRight
-                size={16}
-                className="transition-transform duration-300 group-hover:translate-x-1"
-              />
+              <ArrowRight size={13} className="transition-transform duration-300 group-hover:translate-x-1" />
             </a>
           </motion.div>
 
-          {/* Right Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {siteData.benefits.map((benefit, i) => {
-              const Icon = iconMap[i];
-              return (
+          {/* Right Side — Benefits Grid */}
+          <div className="lg:pt-[30px]">
+            {/* Top Row */}
+            <div className="grid grid-cols-3 gap-x-6 gap-y-8">
+              {topRow.map((benefit, i) => (
                 <motion.div
                   key={benefit.title}
-                  className="bg-white rounded-xl p-6 border border-warm-stone/40"
-                  initial={{ opacity: 0, y: 18 }}
+                  className="flex flex-col"
+                  initial={{ opacity: 0, y: 16 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.45, delay: i * 0.07 }}
                 >
-                  <div className="w-10 h-10 rounded-lg bg-ivory flex items-center justify-center mb-4">
-                    <Icon size={18} className="text-terracotta" />
+                  <div className="flex items-center gap-2.5 mb-3">
+                    <span className="text-terracotta text-[26px] font-medium leading-none">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <div className="h-px w-12 bg-terracotta/30" />
                   </div>
-                  <h3 className="text-[15px] font-semibold text-charcoal mb-1.5">
+                  <h3 className="text-[15px] font-semibold text-charcoal mb-1.5 leading-snug h-[40px]">
                     {benefit.title}
                   </h3>
-                  <p className="text-[13px] text-muted leading-relaxed">
+                  <p className="text-[13.5px] text-muted leading-[1.5] mb-3 h-[40px] line-clamp-2">
                     {benefit.description}
                   </p>
+                  <a
+                    href="#about"
+                    className="inline-flex items-center gap-1.5 text-terracotta text-[12px] font-medium hover:gap-2.5 transition-all duration-300 mt-auto"
+                  >
+                    Learn more <ArrowRight size={11} />
+                  </a>
                 </motion.div>
-              );
-            })}
+              ))}
+            </div>
+
+            {/* Divider */}
+            <div className="my-8 border-t border-warm-stone/50" />
+
+            {/* Bottom Row */}
+            <div className="grid grid-cols-3 gap-x-6 gap-y-8">
+              {bottomRow.map((benefit, i) => (
+                <motion.div
+                  key={benefit.title}
+                  className="flex flex-col"
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.45, delay: (i + 3) * 0.07 }}
+                >
+                  <div className="flex items-center gap-2.5 mb-3">
+                    <span className="text-terracotta text-[26px] font-medium leading-none">
+                      {String(i + 4).padStart(2, "0")}
+                    </span>
+                    <div className="h-px w-12 bg-terracotta/30" />
+                  </div>
+                  <h3 className="text-[15px] font-semibold text-charcoal mb-1.5 leading-snug h-[40px]">
+                    {benefit.title}
+                  </h3>
+                  <p className="text-[13.5px] text-muted leading-[1.5] mb-3 h-[40px] line-clamp-2">
+                    {benefit.description}
+                  </p>
+                  <a
+                    href="#about"
+                    className="inline-flex items-center gap-1.5 text-terracotta text-[12px] font-medium hover:gap-2.5 transition-all duration-300 mt-auto"
+                  >
+                    Learn more <ArrowRight size={11} />
+                  </a>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

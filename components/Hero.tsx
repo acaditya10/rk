@@ -5,14 +5,14 @@ import { ArrowRight, Star } from "lucide-react";
 
 export default function Hero() {
   return (
-    <section className="relative w-full h-[88vh] min-h-[680px] max-h-[960px] overflow-hidden">
+    <section className="relative w-full h-[78vh] min-h-[600px] max-h-[860px] pt-[88px] overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0">
         <motion.div
           className="w-full h-full"
-          initial={{ scale: 1.06 }}
+          initial={{ scale: 1.08 }}
           animate={{ scale: 1 }}
-          transition={{ duration: 2, ease: "easeOut" }}
+          transition={{ duration: 2.5, ease: "easeOut" }}
         >
           <img
             src="/images/hero.jpg"
@@ -23,28 +23,31 @@ export default function Hero() {
             fetchPriority="high"
           />
         </motion.div>
-        {/* Gradient Overlay - stronger left for text, lighter right */}
-        <div className="absolute inset-0 bg-gradient-to-r from-charcoal/85 via-charcoal/45 to-charcoal/15" />
-        <div className="absolute inset-0 bg-gradient-to-t from-charcoal/50 via-transparent to-charcoal/10" />
+        {/* Warm cinematic gradient */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#18120F]/92 via-[#18120F]/52 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#18120F]/68 via-transparent to-[#18120F]/8" />
       </div>
 
       {/* Content */}
       <div className="relative z-10 h-full max-w-[1400px] mx-auto px-6 lg:px-12 flex flex-col justify-center">
-        <div className="max-w-[700px]">
-          <motion.p
-            className="eyebrow text-white/60 mb-5 lg:mb-6"
+        <div className="max-w-[800px]">
+          <motion.div
+            className="flex items-center gap-4 mb-6 lg:mb-7"
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            transition={{ duration: 0.7, delay: 0.3 }}
           >
-            Interior Designers in Patna
-          </motion.p>
+            <p className="eyebrow text-white mb-0">
+              Interior Designers in Patna
+            </p>
+            <div className="h-px w-16 bg-white/25" />
+          </motion.div>
 
           <motion.h1
-            className="text-[2.8rem] sm:text-[3.8rem] lg:text-[4.8rem] xl:text-[5.2rem] leading-[1.06] font-semibold text-white mb-6 lg:mb-8"
+            className="text-[3.15rem] sm:text-[4rem] lg:text-[4.45rem] xl:text-[4.85rem] leading-[0.98] tracking-[-0.045em] font-semibold text-white mb-8 lg:mb-10"
             initial={{ opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
+            transition={{ duration: 0.9, delay: 0.4 }}
           >
             Beautiful Spaces.
             <br />
@@ -52,34 +55,34 @@ export default function Hero() {
           </motion.h1>
 
           <motion.p
-            className="text-white/70 text-[16px] lg:text-[18px] leading-relaxed mb-10 max-w-[500px]"
+            className="text-white/72 text-[16px] lg:text-[18px] leading-[1.65] mb-9 max-w-[540px]"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.55 }}
+            transition={{ duration: 0.7, delay: 0.55 }}
           >
             Premium residential &amp; commercial interiors, designed and
             executed around the way you live.
           </motion.p>
 
           <motion.div
-            className="flex flex-wrap gap-4 mb-12"
+            className="flex flex-wrap items-center gap-4 mb-9"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.65 }}
+            transition={{ duration: 0.7, delay: 0.65 }}
           >
             <a
               href="#contact"
-              className="inline-flex items-center gap-2.5 bg-terracotta text-white text-[15px] font-medium px-8 py-4 rounded-full hover:bg-terracotta/90 transition-all duration-300 group"
+              className="inline-flex items-center gap-3 bg-terracotta text-white text-[14px] font-medium px-8 py-4 rounded-full hover:bg-terracotta/90 transition-all duration-300 group"
             >
               Book a Free Consultation
               <ArrowRight
-                size={18}
+                size={16}
                 className="transition-transform duration-300 group-hover:translate-x-1"
               />
             </a>
             <a
-              href="#portfolio"
-              className="inline-flex items-center gap-2 border border-white/30 text-white text-[15px] font-medium px-8 py-4 rounded-full hover:bg-white/10 transition-all duration-300"
+              href="#projects"
+              className="inline-flex items-center gap-2 border border-white/30 text-white text-[14px] font-medium px-8 py-4 rounded-full hover:bg-white/10 transition-all duration-300"
             >
               Explore Projects
             </a>
@@ -89,13 +92,13 @@ export default function Hero() {
             className="flex items-center gap-3"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.8 }}
+            transition={{ duration: 0.6, delay: 0.85 }}
           >
             <div className="flex gap-0.5">
               {[...Array(5)].map((_, i) => (
                 <Star
                   key={i}
-                  size={15}
+                  size={14}
                   className="fill-terracotta-light text-terracotta-light"
                 />
               ))}

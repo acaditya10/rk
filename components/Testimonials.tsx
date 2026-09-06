@@ -6,67 +6,56 @@ import { siteData } from "@/lib/data";
 
 export default function Testimonials() {
   return (
-    <section className="bg-ivory py-24 lg:py-32">
+    <section className="bg-white py-16 lg:py-20">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
         {/* Header */}
-        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 mb-16">
+        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 mb-10 lg:mb-12">
           <div>
-            <p className="eyebrow text-terracotta mb-4">Testimonials</p>
-            <h2 className="text-[2rem] lg:text-[2.8rem] leading-[1.12] font-semibold text-charcoal">
+            <p className="eyebrow text-terracotta mb-5">Testimonials</p>
+            <h2 className="text-[2.6rem] lg:text-[3.9rem] tracking-[-0.045em] leading-[1.03] font-semibold text-charcoal">
               What Our Clients
               <br />
               <span className="serif-italic text-terracotta">Say About Us.</span>
             </h2>
           </div>
-          <p className="text-muted text-[15px]">
+          <p className="text-muted text-[16px]">
             Real stories. Real people. Real homes.
           </p>
         </div>
 
         {/* Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10">
           {siteData.testimonials.map((testimonial, i) => (
             <motion.div
               key={testimonial.name}
-              className="relative rounded-2xl overflow-hidden group"
+              className="border-t border-charcoal pt-7 lg:pt-8 min-h-[280px] flex flex-col"
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
             >
-              {/* Background Image */}
-              <img
-                src={testimonial.image}
-                alt=""
-                className="absolute inset-0 w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-charcoal/75" />
+              {/* Stars */}
+              <div className="flex gap-0.5 mb-6">
+                {[...Array(testimonial.rating)].map((_, j) => (
+                  <Star
+                    key={j}
+                    size={16}
+                    className="fill-terracotta text-terracotta"
+                  />
+                ))}
+              </div>
 
-              {/* Content */}
-              <div className="relative p-8 lg:p-9">
-                {/* Stars */}
-                <div className="flex gap-0.5 mb-5">
-                  {[...Array(testimonial.rating)].map((_, j) => (
-                    <Star
-                      key={j}
-                      size={15}
-                      className="fill-terracotta-light text-terracotta-light"
-                    />
-                  ))}
-                </div>
+              <p className="text-charcoal text-[18px] leading-[1.65] tracking-[-0.012em] mb-9 flex-1">
+                &ldquo;{testimonial.text}&rdquo;
+              </p>
 
-                <p className="text-white text-[15px] leading-relaxed mb-7">
-                  &ldquo;{testimonial.text}&rdquo;
+              <div className="pt-5 border-t border-warm-stone/60">
+                <p className="text-charcoal text-[16px] font-semibold">
+                  {testimonial.name}
                 </p>
-
-                <div className="border-t border-white/15 pt-5">
-                  <p className="text-white text-[15px] font-semibold">
-                    {testimonial.name}
-                  </p>
-                  <p className="text-white/55 text-[13px] mt-1">
-                    {testimonial.location} · {testimonial.projectType}
-                  </p>
-                </div>
+                <p className="text-muted text-[14px] mt-1.5">
+                  {testimonial.location} · {testimonial.projectType}
+                </p>
               </div>
             </motion.div>
           ))}
