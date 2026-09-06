@@ -6,7 +6,9 @@ export const metadata: Metadata = {
   description:
     "Premium residential and commercial interior design and execution services in Patna by RK Interiors.",
   icons: {
-    icon: "/favicon.jpg",
+    icon: [
+      { url: "/favicon.jpg", sizes: "any", type: "image/jpeg" },
+    ],
   },
 };
 
