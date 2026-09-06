@@ -15,7 +15,7 @@ const contactItems = [
   { icon: MapPin, title: "Patna & surrounding areas", description: "We serve homes and businesses across Patna." },
   { icon: Phone, title: siteData.brand.phone, description: "Mon – Sat, 10:00 AM – 7:00 PM", href: `tel:${siteData.brand.phone}` },
   { icon: MessageCircle, title: "Chat on WhatsApp", description: "Get quick answers from our team.", href: `https://wa.me/${siteData.brand.whatsapp}` },
-  { icon: MapPin, title: "Visit our Experience Centre", description: siteData.brand.experienceCentreAddress, href: "https://maps.google.com/?q=Patna+Bihar" },
+  { icon: MapPin, title: "Visit our Experience Centre", description: siteData.brand.experienceCentreAddress, href: "https://maps.app.goo.gl/tzd7ym8p34zbdffg7" },
 ];
 
 const trustBadges = [

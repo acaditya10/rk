@@ -72,7 +72,7 @@ export default function ExperienceCentre() {
                 />
               </a>
               <a
-                href="https://maps.google.com/?q=Patna+Bihar"
+                href="https://maps.app.goo.gl/tzd7ym8p34zbdffg7"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-3 border border-charcoal text-charcoal text-[15px] font-medium px-8 py-4 rounded-full hover:bg-charcoal hover:text-white transition-all duration-300"
