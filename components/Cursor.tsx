@@ -69,31 +69,44 @@ export default function Cursor() {
         transition: "opacity 0.2s ease",
       }}
     >
-      {/* Corner brackets cursor */}
-      <div className="cursor-brackets relative w-[32px] h-[32px] -translate-x-1/2 -translate-y-1/2">
-        {/* Top-left */}
-        <span className="absolute top-0 left-0 w-2.5 h-2.5 border-l-[1.5px] border-t-[1.5px] border-terracotta/80 rounded-tl-[1px] transition-all duration-200 ease-out" />
-        {/* Top-right */}
-        <span className="absolute top-0 right-0 w-2.5 h-2.5 border-r-[1.5px] border-t-[1.5px] border-terracotta/80 rounded-tr-[1px] transition-all duration-200 ease-out" />
-        {/* Bottom-left */}
-        <span className="absolute bottom-0 left-0 w-2.5 h-2.5 border-l-[1.5px] border-b-[1.5px] border-terracotta/80 rounded-bl-[1px] transition-all duration-200 ease-out" />
-        {/* Bottom-right */}
-        <span className="absolute bottom-0 right-0 w-2.5 h-2.5 border-r-[1.5px] border-b-[1.5px] border-terracotta/80 rounded-br-[1px] transition-all duration-200 ease-out" />
+      <div className="pinpoint-cursor relative -translate-x-1/2 -translate-y-1/2">
         {/* Center dot */}
-        <span className="absolute top-1/2 left-1/2 w-[3px] h-[3px] -translate-x-1/2 -translate-y-1/2 bg-terracotta rounded-full transition-all duration-200 ease-out" />
+        <span className="center-dot absolute top-1/2 left-1/2 w-[5px] h-[5px] -translate-x-1/2 -translate-y-1/2 bg-terracotta rounded-full transition-all duration-200 ease-out" />
+        {/* Ring 1 */}
+        <span className="ring ring-1 absolute top-1/2 left-1/2 w-4 h-4 -translate-x-1/2 -translate-y-1/2 border border-terracotta/60 rounded-full transition-all duration-300 ease-out" />
+        {/* Ring 2 */}
+        <span className="ring ring-2 absolute top-1/2 left-1/2 w-7 h-7 -translate-x-1/2 -translate-y-1/2 border border-terracotta/30 rounded-full transition-all duration-400 ease-out" />
       </div>
 
       <style jsx>{`
-        .cursor-brackets {
-          transition: width 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                      height 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        .pinpoint-cursor {
+          width: 28px;
+          height: 28px;
+          transition: width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                      height 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
-        .cursor-hover .cursor-brackets {
+        .cursor-hover .center-dot {
+          width: 4px !important;
+          height: 4px !important;
+          background: white !important;
+        }
+        .cursor-hover .ring-1 {
+          width: 36px !important;
+          height: 36px !important;
+          border-color: rgba(185, 98, 63, 0.9) !important;
+        }
+        .cursor-hover .ring-2 {
           width: 52px !important;
           height: 52px !important;
+          border-color: rgba(185, 98, 63, 0.4) !important;
         }
-        .cursor-hover .cursor-brackets span {
-          border-color: rgba(185, 98, 63, 1) !important;
+        /* Ripple pulse on hover */
+        @keyframes ripple {
+          0% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+          100% { transform: translate(-50%, -50%) scale(1.6); opacity: 0; }
+        }
+        .cursor-hover .ring-2 {
+          animation: ripple 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
         }
       `}</style>
     </div>
