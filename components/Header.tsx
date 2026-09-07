@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { siteData } from "@/lib/data";
@@ -12,7 +12,7 @@ export default function Header() {
   const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const lastScrollY = useRef(0);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   useEffect(() => {
     const onScroll = () => {
@@ -20,16 +20,16 @@ export default function Header() {
       setScrolled(y > 24);
       if (y < 10) {
         setHidden(false);
-      } else if (y > lastScrollY.current + 5) {
+      } else if (y > lastScrollY + 5) {
         setHidden(true);
-      } else if (y < lastScrollY.current - 5) {
+      } else if (y < lastScrollY - 5) {
         setHidden(false);
       }
-      lastScrollY.current = y;
+      setLastScrollY(y);
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [lastScrollY]);
 
   useEffect(() => {
     if (mobileOpen) {
@@ -54,7 +54,6 @@ export default function Header() {
       >
         <div className="max-w-[1200px] mx-auto px-5 lg:px-8">
           <div className="flex items-center justify-between h-[52px] lg:h-[56px]">
-            {/* Logo */}
             <Link href="/" className="flex items-center shrink-0">
               <img
                 src="/images/logo.png"
@@ -63,7 +62,6 @@ export default function Header() {
               />
             </Link>
 
-            {/* Desktop Nav */}
             <nav className="hidden lg:flex items-center gap-5">
               {navLinks.map((link) => (
                 <a
@@ -76,7 +74,6 @@ export default function Header() {
               ))}
             </nav>
 
-            {/* CTA */}
             <div className="hidden lg:flex items-center">
               <a
                 href="#contact"
@@ -87,54 +84,115 @@ export default function Header() {
               </a>
             </div>
 
-            {/* Mobile Hamburger */}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="lg:hidden p-1.5 text-charcoal"
+              className="lg:hidden p-1.5 text-charcoal z-[60] relative"
               aria-label="Toggle menu"
             >
-              {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+              {mobileOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
         </div>
       </motion.header>
 
-      {/* Mobile Menu Overlay */}
+      {/* Curtain Sweep Menu */}
       <AnimatePresence>
         {mobileOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 bg-charcoal/95 backdrop-blur-lg lg:hidden"
-          >
-            <div className="flex flex-col items-center justify-center h-full gap-7">
-              {navLinks.map((link, i) => (
-                <motion.a
-                  key={link}
-                  href={`#${link.toLowerCase()}`}
-                  onClick={() => setMobileOpen(false)}
+          <>
+            {/* Diagonal curtain panel */}
+            <motion.div
+              className="fixed inset-0 z-50 lg:hidden"
+              initial={{ clipPath: "polygon(100% 0, 100% 0, 100% 100%, 100% 100%)" }}
+              animate={{ clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)" }}
+              exit={{ clipPath: "polygon(100% 0, 100% 0, 100% 100%, 100% 100%)" }}
+              transition={{ duration: 0.5, ease: [0.76, 0, 0.24, 1] }}
+            >
+              {/* Background with texture */}
+              <div className="absolute inset-0 bg-[#171A18]">
+                {/* Subtle diagonal lines texture */}
+                <div
+                  className="absolute inset-0 opacity-[0.03]"
+                  style={{
+                    backgroundImage: `repeating-linear-gradient(
+                      -45deg,
+                      transparent,
+                      transparent 20px,
+                      rgba(185, 98, 63, 0.5) 20px,
+                      rgba(185, 98, 63, 0.5) 21px
+                    )`,
+                  }}
+                />
+              </div>
+
+              {/* Content */}
+              <div className="relative h-full flex flex-col justify-center px-10 sm:px-14">
+                {/* Navigation links */}
+                <nav className="flex flex-col gap-1">
+                  {navLinks.map((link, i) => (
+                    <motion.div
+                      key={link}
+                      initial={{ opacity: 0, x: 40 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: 40 }}
+                      transition={{
+                        delay: 0.25 + i * 0.07,
+                        duration: 0.4,
+                        ease: [0.76, 0, 0.24, 1],
+                      }}
+                    >
+                      <a
+                        href={`#${link.toLowerCase()}`}
+                        onClick={() => setMobileOpen(false)}
+                        className="group flex items-center gap-4 py-3"
+                      >
+                        <span className="text-white/20 text-[11px] font-mono tabular-nums w-5">
+                          0{i + 1}
+                        </span>
+                        <span className="text-white/85 text-[1.6rem] sm:text-[1.9rem] font-light tracking-[-0.01em] transition-colors duration-300 group-hover:text-terracotta-light">
+                          {link}
+                        </span>
+                        <div className="h-px flex-1 bg-white/8 group-hover:bg-terracotta-light/30 transition-colors duration-300" />
+                      </a>
+                    </motion.div>
+                  ))}
+                </nav>
+
+                {/* CTA */}
+                <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.08, duration: 0.4 }}
-                  className="text-white text-xl font-light tracking-wide hover:text-terracotta transition-colors"
+                  exit={{ opacity: 0, y: 20 }}
+                  transition={{ delay: 0.25 + navLinks.length * 0.07, duration: 0.4 }}
+                  className="mt-8"
                 >
-                  {link}
-                </motion.a>
-              ))}
-              <motion.a
-                href="#contact"
-                onClick={() => setMobileOpen(false)}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: navLinks.length * 0.08, duration: 0.4 }}
-                className="mt-3 bg-terracotta text-white text-[14px] font-medium px-7 py-3 rounded-full"
-              >
-                Book a Consultation →
-              </motion.a>
-            </div>
-          </motion.div>
+                  <a
+                    href="#contact"
+                    onClick={() => setMobileOpen(false)}
+                    className="inline-flex items-center gap-3 bg-terracotta text-white text-[13px] font-medium tracking-wide px-7 py-3.5 rounded-full hover:bg-terracotta-light transition-colors duration-300"
+                  >
+                    Book a Consultation
+                    <span>→</span>
+                  </a>
+                </motion.div>
+
+                {/* Bottom info */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ delay: 0.6, duration: 0.4 }}
+                  className="absolute bottom-8 left-10 sm:left-14 right-10 flex items-center justify-between"
+                >
+                  <p className="text-white/25 text-[11px] tracking-wide">
+                    {siteData.brand.phone}
+                  </p>
+                  <p className="text-white/25 text-[11px] tracking-wide">
+                    Patna, Bihar
+                  </p>
+                </motion.div>
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </>
