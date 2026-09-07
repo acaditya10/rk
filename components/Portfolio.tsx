@@ -96,10 +96,12 @@ export default function Portfolio() {
                   <img
                     src={project.image}
                     alt={project.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                   />
-                  {/* Overlay */}
+                  {/* Base overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-charcoal/80 via-charcoal/5 to-transparent opacity-70 group-hover:opacity-100 transition-opacity duration-500" />
+                  {/* Warm tint on hover */}
+                  <div className="absolute inset-0 bg-terracotta/0 group-hover:bg-terracotta/10 transition-colors duration-700" />
                   <div className="absolute bottom-0 left-0 right-0 p-6 lg:p-7 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
                     <p className="text-white/65 text-[11px] font-medium tracking-[0.14em] uppercase mb-2">
                       {project.location} · {project.category}
@@ -107,6 +109,10 @@ export default function Portfolio() {
                     <h3 className="text-white text-[20px] lg:text-[22px] font-semibold tracking-[-0.02em]">
                       {project.title}
                     </h3>
+                    <div className="flex items-center gap-2 mt-3 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-500 delay-75">
+                      <span className="text-white/70 text-[12px] tracking-[0.1em] uppercase">View Project</span>
+                      <ArrowRight size={13} className="text-white/70" />
+                    </div>
                   </div>
                 </motion.div>
               );

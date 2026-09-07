@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import Cursor from "@/components/Cursor";
 
 export const metadata: Metadata = {
   title: "RK Interiors | Interior Designers in Patna",
@@ -17,7 +18,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="antialiased">
-      <body className="min-h-screen bg-ivory text-charcoal font-sans">
+      <body className="min-h-screen bg-ivory text-charcoal font-sans grain">
+        <Cursor />
         {children}
       </body>
     </html>
