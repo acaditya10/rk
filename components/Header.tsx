@@ -43,7 +43,7 @@ export default function Header() {
   return (
     <>
       <motion.header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 transition-all duration-300 ${mobileOpen ? "z-[60]" : "z-50"} ${
           scrolled
             ? "bg-ivory shadow-[0_1px_12px_rgba(24,18,15,0.06)]"
             : "bg-ivory"
