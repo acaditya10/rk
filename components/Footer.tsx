@@ -3,23 +3,23 @@ import { siteData } from "@/lib/data";
 export default function Footer() {
   return (
     <footer className="bg-dark-bg text-white/70">
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-12 py-16 lg:py-20">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
+      <div className="max-w-[1400px] mx-auto px-6 lg:px-12 py-10 lg:py-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
           {/* Column 1 */}
           <div>
-            <div className="mb-6">
-              <div className="inline-flex bg-ivory px-3 py-2 mb-4">
+            <div className="mb-4">
+              <div className="inline-flex bg-ivory px-3 py-2 mb-3">
                 <img
                   src="/images/logo.png"
                   alt="RK Interiors"
-                  className="h-9 w-auto"
+                  className="h-8 w-auto"
                 />
               </div>
-              <p className="text-[10px] tracking-[0.22em] text-white/35 mt-1">
+              <p className="text-[10px] tracking-[0.22em] text-white/35">
                 {siteData.brand.tagline}
               </p>
             </div>
-            <p className="text-[15px] leading-[1.7] text-white/45 max-w-[280px]">
+            <p className="text-[14px] leading-[1.6] text-white/45 max-w-[280px]">
               Premium interior design and execution for homes and businesses
               in Patna.
             </p>
@@ -27,15 +27,15 @@ export default function Footer() {
 
           {/* Column 2 */}
           <div>
-            <h4 className="text-[13px] font-semibold tracking-[0.14em] uppercase text-white/65 mb-7">
+            <h4 className="text-[12px] font-semibold tracking-[0.14em] uppercase text-white/65 mb-4">
               Quick Links
             </h4>
-            <ul className="space-y-3.5">
+            <ul className="space-y-2">
               {siteData.quickLinks.map((link) => (
                 <li key={link}>
                   <a
                     href={`#${link.toLowerCase()}`}
-                    className="text-[15px] text-white/45 hover:text-terracotta-light transition-colors duration-300"
+                    className="text-[14px] text-white/45 hover:text-terracotta-light transition-colors duration-300"
                   >
                     {link}
                   </a>
@@ -46,15 +46,15 @@ export default function Footer() {
 
           {/* Column 3 */}
           <div>
-            <h4 className="text-[13px] font-semibold tracking-[0.14em] uppercase text-white/65 mb-7">
+            <h4 className="text-[12px] font-semibold tracking-[0.14em] uppercase text-white/65 mb-4">
               Our Services
             </h4>
-            <ul className="space-y-3.5">
+            <ul className="space-y-2">
               {siteData.footerServices.map((service) => (
                 <li key={service}>
                   <a
                     href="#services"
-                    className="text-[15px] text-white/45 hover:text-terracotta-light transition-colors duration-300"
+                    className="text-[14px] text-white/45 hover:text-terracotta-light transition-colors duration-300"
                   >
                     {service}
                   </a>
@@ -65,14 +65,14 @@ export default function Footer() {
 
           {/* Column 4 */}
           <div>
-            <h4 className="text-[13px] font-semibold tracking-[0.14em] uppercase text-white/65 mb-7">
+            <h4 className="text-[12px] font-semibold tracking-[0.14em] uppercase text-white/65 mb-4">
               Contact
             </h4>
-            <ul className="space-y-3.5">
+            <ul className="space-y-2">
               <li>
                 <a
                   href={`tel:${siteData.brand.phone}`}
-                  className="text-[15px] text-white/45 hover:text-terracotta-light transition-colors"
+                  className="text-[14px] text-white/45 hover:text-terracotta-light transition-colors"
                 >
                   {siteData.brand.phone}
                 </a>
@@ -82,7 +82,7 @@ export default function Footer() {
                   href={`https://wa.me/${siteData.brand.whatsapp}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[15px] text-white/45 hover:text-terracotta-light transition-colors"
+                  className="text-[14px] text-white/45 hover:text-terracotta-light transition-colors"
                 >
                   WhatsApp
                 </a>
@@ -90,15 +90,15 @@ export default function Footer() {
               <li>
                 <a
                   href={`mailto:${siteData.brand.email}`}
-                  className="text-[15px] text-white/45 hover:text-terracotta-light transition-colors"
+                  className="text-[14px] text-white/45 hover:text-terracotta-light transition-colors"
                 >
                   {siteData.brand.email}
                 </a>
               </li>
-              <li className="text-[15px] text-white/45">
+              <li className="text-[14px] text-white/45">
                 {siteData.brand.experienceCentreAddress}
               </li>
-              <li className="text-[15px] text-white/45">
+              <li className="text-[14px] text-white/45">
                 {siteData.brand.workingHours}
               </li>
             </ul>
@@ -108,11 +108,11 @@ export default function Footer() {
 
       {/* Bottom Bar */}
       <div className="border-t border-white/6">
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-12 py-7 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-[12px] text-white/30">
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-12 py-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+          <p className="text-[11px] text-white/30">
             © 2026 RK Interiors. All rights reserved.
           </p>
-          <p className="text-[12px] text-white/30">
+          <p className="text-[11px] text-white/30">
             Design &amp; Development by{" "}
             <a
               href="https://getvortexlabs.com"
