@@ -37,9 +37,12 @@ export default function ExperienceCentre() {
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.1 }}
           >
-            <p className="eyebrow text-terracotta mb-5">
-              Visit Our Experience Centre
-            </p>
+            <div className="flex items-center gap-3 mb-5">
+              <p className="eyebrow text-terracotta mb-0">
+                Visit Our Experience Centre
+              </p>
+              <div className="h-px w-8 bg-terracotta/50" />
+            </div>
             <h2 className="text-[2.6rem] lg:text-[3.8rem] tracking-[-0.045em] leading-[1.02] font-semibold text-charcoal mb-7">
               See. Touch.{" "}
               <span className="serif-italic text-terracotta">Experience.</span>

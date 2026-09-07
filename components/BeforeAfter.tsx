@@ -43,13 +43,16 @@ export default function BeforeAfter() {
         <div className="grid grid-cols-1 lg:grid-cols-[0.58fr_1.9fr] gap-8 lg:gap-12 items-center">
           {/* Left Text */}
           <motion.div
-            className="order-2 lg:order-1 pb-2"
+            className="order-1 lg:order-1 pb-2"
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <p className="eyebrow text-terracotta-light mb-5">Transformation</p>
+            <div className="flex items-center gap-3 mb-5">
+              <p className="eyebrow text-terracotta-light mb-0">Transformation</p>
+              <div className="h-px w-8 bg-terracotta-light/50" />
+            </div>
             <h2 className="text-[2.5rem] lg:text-[3.7rem] tracking-[-0.04em] leading-[1.02] font-semibold text-white mb-6">
               See What
               <br />
@@ -64,7 +67,7 @@ export default function BeforeAfter() {
 
           {/* Slider */}
           <motion.div
-            className="order-1 lg:order-2"
+            className="order-2 lg:order-2"
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}

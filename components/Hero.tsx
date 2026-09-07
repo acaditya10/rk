@@ -37,10 +37,10 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.3 }}
           >
-            <p className="eyebrow text-white mb-0">
+            <p className="eyebrow mb-0" style={{ color: "#fff" }}>
               Interior Designers in Patna
             </p>
-            <div className="h-px w-16 bg-white/25" />
+            <div className="h-px w-16 bg-white" />
           </motion.div>
 
           <motion.h1

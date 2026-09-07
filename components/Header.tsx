@@ -45,8 +45,8 @@ export default function Header() {
       <motion.header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
-            ? "bg-ivory/95 backdrop-blur-md shadow-[0_1px_12px_rgba(24,18,15,0.06)]"
-            : "bg-ivory/80 backdrop-blur-sm"
+            ? "bg-ivory shadow-[0_1px_12px_rgba(24,18,15,0.06)]"
+            : "bg-ivory"
         }`}
         initial={{ y: -100 }}
         animate={{ y: hidden ? -100 : 0 }}

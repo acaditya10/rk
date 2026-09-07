@@ -31,7 +31,10 @@ export default function Portfolio() {
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
         {/* Header */}
         <div className="mb-9 lg:mb-10">
-          <p className="eyebrow text-terracotta mb-5">Our Work</p>
+          <div className="flex items-center gap-3 mb-5">
+            <p className="eyebrow text-terracotta mb-0">Our Work</p>
+            <div className="h-px w-8 bg-terracotta/50" />
+          </div>
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
             <h2 className="text-[2.7rem] lg:text-[3.4rem] tracking-[-0.045em] leading-[1.02] font-semibold text-charcoal">
               Real Homes. <span className="serif-italic text-terracotta">Real Results.</span>
