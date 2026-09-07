@@ -45,7 +45,7 @@ export default function Testimonials() {
             >
               {/* Quote + Stars */}
               <div className="flex items-start gap-4 mb-5">
-                <span className="text-[72px] leading-[0.6] text-warm-stone/50 font-serif select-none -mt-2">&ldquo;</span>
+                <span className="text-[216px] leading-[0.6] text-warm-stone/50 font-serif select-none -mt-2">&ldquo;</span>
                 <div className="flex gap-0.5 mt-2">
                   {[...Array(testimonial.rating)].map((_, j) => (
                     <Star
