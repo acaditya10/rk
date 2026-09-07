@@ -2,9 +2,32 @@
 
 import { useEffect, useRef, useCallback } from "react";
 
+function luminance(r: number, g: number, b: number): number {
+  return (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+}
+
+function parseRgb(color: string): [number, number, number] | null {
+  const m = color.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+  return m ? [parseInt(m[1]), parseInt(m[2]), parseInt(m[3])] : null;
+}
+
+function findBgColor(el: HTMLElement | null): string | null {
+  while (el && el !== document.body) {
+    const bg = getComputedStyle(el).backgroundColor;
+    if (bg && bg !== "rgba(0, 0, 0, 0)" && bg !== "transparent") return bg;
+    el = el.parentElement;
+  }
+  return null;
+}
+
+function isDark(color: string): boolean {
+  const rgb = parseRgb(color);
+  if (!rgb) return false;
+  return luminance(rgb[0], rgb[1], rgb[2]) < 0.5;
+}
+
 export default function Cursor() {
   const dotRef = useRef<HTMLDivElement>(null);
-  const hovered = useRef(false);
   const visible = useRef(false);
 
   const updateVisibility = useCallback((show: boolean) => {
@@ -30,14 +53,35 @@ export default function Cursor() {
     const over = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       if (target.closest("a, button, [data-cursor-hover], input, textarea, select")) {
-        hovered.current = true;
         el.classList.add("cursor-hover");
+      }
+      const override = target.closest("[data-cursor]");
+      el.classList.remove("cursor-dark", "cursor-light");
+      if (override) {
+        const val = override.getAttribute("data-cursor");
+        if (val === "dark") el.classList.add("cursor-dark");
+        else if (val === "light") el.classList.add("cursor-light");
+      } else {
+        const bg = findBgColor(target);
+        if (bg && isDark(bg)) el.classList.add("cursor-light");
       }
     };
 
-    const out = () => {
-      hovered.current = false;
+    const out = (e: MouseEvent) => {
+      const related = e.relatedTarget as HTMLElement | null;
       el.classList.remove("cursor-hover");
+      el.classList.remove("cursor-dark", "cursor-light");
+      if (related) {
+        const override = (related as HTMLElement).closest?.("[data-cursor]");
+        if (override) {
+          const val = override.getAttribute("data-cursor");
+          if (val === "dark") el.classList.add("cursor-dark");
+          else if (val === "light") el.classList.add("cursor-light");
+        } else {
+          const bg = findBgColor(related as HTMLElement);
+          if (bg && isDark(bg)) el.classList.add("cursor-light");
+        }
+      }
     };
 
     const leave = () => updateVisibility(false);
@@ -59,49 +103,103 @@ export default function Cursor() {
   }, [updateVisibility]);
 
   return (
-    <div
-      ref={dotRef}
-      className="fixed top-0 left-0 pointer-events-none z-[9999] hidden lg:block opacity-0"
-      style={{
-        width: 0,
-        height: 0,
-        willChange: "transform",
-        transition: "opacity 0.2s ease",
-      }}
-    >
-      <div className="diamond-cursor relative -translate-x-1/2 -translate-y-1/2">
-        {/* Outer diamond */}
-        <span className="diamond-outer absolute top-1/2 left-1/2 w-7 h-7 -translate-x-1/2 -translate-y-1/2 border-[1.5px] border-terracotta/50 rotate-45 transition-all duration-300 ease-out" />
-        {/* Inner diamond */}
-        <span className="diamond-inner absolute top-1/2 left-1/2 w-3 h-3 -translate-x-1/2 -translate-y-1/2 bg-terracotta/80 rotate-45 transition-all duration-250 ease-out" />
+    <>
+      <div
+        ref={dotRef}
+        className="cursor-box fixed top-0 left-0 pointer-events-none z-[9999] hidden lg:block opacity-0"
+        style={{ willChange: "transform", transition: "opacity 0.2s ease" }}
+      >
+        <div className="diamond-outer" />
+        <div className="diamond-inner" />
       </div>
 
-      <style jsx>{`
-        .diamond-cursor {
+      <style jsx global>{`
+        .cursor-box {
+          width: 0;
+          height: 0;
+        }
+        .diamond-outer {
+          position: absolute;
+          top: -14px;
+          left: -14px;
           width: 28px;
           height: 28px;
+          border: 1.5px solid rgba(185, 98, 63, 0.5);
+          transform: rotate(45deg);
+          transition: width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                      height 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                      top 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                      left 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                      border-color 0.3s ease;
         }
+        .diamond-inner {
+          position: absolute;
+          top: -5px;
+          left: -5px;
+          width: 10px;
+          height: 10px;
+          background: rgba(185, 98, 63, 0.8);
+          transform: rotate(45deg);
+          transition: width 0.25s ease, height 0.25s ease,
+                      top 0.25s ease, left 0.25s ease,
+                      background 0.25s ease;
+        }
+
+        /* Hover: expand */
         .cursor-hover .diamond-outer {
-          width: 48px !important;
-          height: 48px !important;
-          border-color: rgba(185, 98, 63, 0.9) !important;
-          animation: diamond-spin 2s linear infinite;
+          width: 48px;
+          height: 48px;
+          top: -24px;
+          left: -24px;
+          border-color: rgba(185, 98, 63, 0.9);
+          animation: dspin 2.5s linear infinite;
         }
         .cursor-hover .diamond-inner {
-          width: 8px !important;
-          height: 8px !important;
-          background: white !important;
-          animation: diamond-spin-reverse 1.5s linear infinite;
+          width: 8px;
+          height: 8px;
+          top: -4px;
+          left: -4px;
+          background: white;
+          animation: dspin-rev 1.8s linear infinite;
         }
-        @keyframes diamond-spin {
-          from { transform: translate(-50%, -50%) rotate(45deg); }
-          to { transform: translate(-50%, -50%) rotate(405deg); }
+
+        /* Light cursor on dark backgrounds */
+        .cursor-light .diamond-outer {
+          border-color: rgba(255, 255, 255, 0.5);
         }
-        @keyframes diamond-spin-reverse {
-          from { transform: translate(-50%, -50%) rotate(45deg); }
-          to { transform: translate(-50%, -50%) rotate(-315deg); }
+        .cursor-light .diamond-inner {
+          background: rgba(255, 255, 255, 0.8);
+        }
+        .cursor-light.cursor-hover .diamond-outer {
+          border-color: rgba(255, 255, 255, 0.9);
+        }
+        .cursor-light.cursor-hover .diamond-inner {
+          background: rgba(185, 98, 63, 1);
+        }
+
+        /* Dark cursor on light backgrounds (explicit) */
+        .cursor-dark .diamond-outer {
+          border-color: rgba(23, 26, 24, 0.3);
+        }
+        .cursor-dark .diamond-inner {
+          background: rgba(23, 26, 24, 0.7);
+        }
+        .cursor-dark.cursor-hover .diamond-outer {
+          border-color: rgba(23, 26, 24, 0.8);
+        }
+        .cursor-dark.cursor-hover .diamond-inner {
+          background: white;
+        }
+
+        @keyframes dspin {
+          from { transform: rotate(45deg); }
+          to { transform: rotate(405deg); }
+        }
+        @keyframes dspin-rev {
+          from { transform: rotate(45deg); }
+          to { transform: rotate(-315deg); }
         }
       `}</style>
-    </div>
+    </>
   );
 }
