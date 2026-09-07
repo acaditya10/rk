@@ -44,9 +44,9 @@ export default function Testimonials() {
               transition={{ duration: 0.5, delay: i * 0.1 }}
             >
               {/* Quote + Stars */}
-              <div className="flex items-center gap-4 mb-5">
-                <span className="text-[40px] leading-none text-warm-stone/60 font-serif">&ldquo;</span>
-                <div className="flex gap-0.5">
+              <div className="flex items-start gap-4 mb-5">
+                <span className="text-[72px] leading-[0.6] text-warm-stone/50 font-serif select-none -mt-2">&ldquo;</span>
+                <div className="flex gap-0.5 mt-2">
                   {[...Array(testimonial.rating)].map((_, j) => (
                     <Star
                       key={j}
