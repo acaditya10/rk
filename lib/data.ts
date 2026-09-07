@@ -91,6 +91,9 @@ export const siteData = {
     { id: "16", title: "Modern Kitchen", location: "Patna", category: "Kitchens", image: "/images/portfolio-16.jpg" },
     { id: "17", title: "Guest Bedroom", location: "Nalanda", category: "Bedrooms", image: "/images/portfolio-17.jpg" },
     { id: "18", title: "Showroom Office", location: "Bhagalpur", category: "Commercial", image: "/images/portfolio-18.jpg" },
+    { id: "19", title: "Luxury Villa Interiors", location: "Patna", category: "Full Homes", image: "/images/portfolio-19.jpg" },
+    { id: "20", title: "Contemporary Kitchen", location: "Muzaffarpur", category: "Kitchens", image: "/images/portfolio-20.jpg" },
+    { id: "21", title: "Kids Bedroom Design", location: "Rajgir", category: "Bedrooms", image: "/images/portfolio-21.jpg" },
   ],
   portfolioFilters: ["All", "Full Homes", "Kitchens", "Bedrooms", "Commercial", "Renovations"],
   testimonials: [

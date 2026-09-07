@@ -37,10 +37,10 @@ function ServiceCard({
           <h3 className="text-[11px] lg:text-[12px] font-semibold tracking-[0.1em] uppercase text-white mb-1">
             {service.title}
           </h3>
-          <p className="text-[11.5px] text-white/70 leading-snug mb-2">
+          <p className="hidden lg:block text-[11.5px] text-white/70 leading-snug mb-2">
             {service.description}
           </p>
-          <span className="inline-flex items-center gap-1.5 text-terracotta text-[11px] font-medium tracking-wide group-hover:gap-2.5 transition-all duration-300">
+          <span className="hidden lg:inline-flex items-center gap-1.5 text-terracotta text-[11px] font-medium tracking-wide group-hover:gap-2.5 transition-all duration-300">
             Explore <ArrowRight size={11} />
           </span>
         </div>
