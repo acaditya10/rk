@@ -10,10 +10,10 @@ export default function Testimonials() {
   const testimonials = siteData.testimonials;
 
   return (
-    <section className="bg-white py-14 lg:py-20">
+    <section className="bg-white py-12 lg:py-16">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
         {/* Header */}
-        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-10 lg:mb-14">
+        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-8 lg:mb-10">
           <div>
             <div className="flex items-center gap-3 mb-5">
               <p className="eyebrow text-terracotta mb-0">Testimonials</p>
@@ -37,37 +37,34 @@ export default function Testimonials() {
           {testimonials.map((testimonial, i) => (
             <motion.div
               key={testimonial.name}
-              className="border border-warm-stone/40 rounded-lg p-6 lg:p-7 flex flex-col"
+              className="border border-warm-stone/40 rounded-lg p-5 lg:p-6 flex flex-col"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
             >
-              {/* Quote + Stars */}
-              <div className="flex items-start gap-4 mb-5">
-                <span className="text-[216px] leading-[0.6] text-warm-stone/50 font-serif select-none -mt-2">&ldquo;</span>
-                <div className="flex gap-0.5 mt-2">
-                  {[...Array(testimonial.rating)].map((_, j) => (
-                    <Star
-                      key={j}
-                      size={14}
-                      className="fill-terracotta text-terracotta"
-                    />
-                  ))}
-                </div>
+              {/* Stars */}
+              <div className="flex gap-0.5 mb-3">
+                {[...Array(testimonial.rating)].map((_, j) => (
+                  <Star
+                    key={j}
+                    size={14}
+                    className="fill-terracotta text-terracotta"
+                  />
+                ))}
               </div>
 
               {/* Review Text */}
-              <p className="text-charcoal text-[15px] leading-[1.7] mb-6 flex-1">
-                &ldquo;{testimonial.text}&rdquo;
+              <p className="text-charcoal text-[15px] leading-[1.65] mb-5 flex-1">
+                {testimonial.text}
               </p>
 
               {/* Divider */}
-              <div className="border-t border-warm-stone/40 pt-5 mt-auto">
+              <div className="border-t border-warm-stone/40 pt-4 mt-auto">
                 <p className="text-charcoal text-[15px] font-semibold">
                   {testimonial.name}
                 </p>
-                <p className="text-muted text-[13px] mt-1">
+                <p className="text-muted text-[13px] mt-0.5">
                   {testimonial.location} · {testimonial.projectType}
                 </p>
               </div>
@@ -76,7 +73,7 @@ export default function Testimonials() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 mt-10 lg:mt-12">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 mt-8 lg:mt-10">
           {/* Google Rating */}
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
