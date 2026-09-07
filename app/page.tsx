@@ -8,7 +8,6 @@ import WhyChooseUs from "@/components/WhyChooseUs";
 import Portfolio from "@/components/Portfolio";
 import BeforeAfter from "@/components/BeforeAfter";
 import Testimonials from "@/components/Testimonials";
-import ExperienceCentre from "@/components/ExperienceCentre";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 
@@ -26,7 +25,6 @@ export default function Home() {
         <Portfolio />
         <BeforeAfter />
         <Testimonials />
-        <ExperienceCentre />
         <Contact />
       </main>
       <Footer />
