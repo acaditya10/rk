@@ -69,44 +69,37 @@ export default function Cursor() {
         transition: "opacity 0.2s ease",
       }}
     >
-      <div className="pinpoint-cursor relative -translate-x-1/2 -translate-y-1/2">
-        {/* Center dot */}
-        <span className="center-dot absolute top-1/2 left-1/2 w-[5px] h-[5px] -translate-x-1/2 -translate-y-1/2 bg-terracotta rounded-full transition-all duration-200 ease-out" />
-        {/* Ring 1 */}
-        <span className="ring ring-1 absolute top-1/2 left-1/2 w-4 h-4 -translate-x-1/2 -translate-y-1/2 border border-terracotta/60 rounded-full transition-all duration-300 ease-out" />
-        {/* Ring 2 */}
-        <span className="ring ring-2 absolute top-1/2 left-1/2 w-7 h-7 -translate-x-1/2 -translate-y-1/2 border border-terracotta/30 rounded-full transition-all duration-400 ease-out" />
+      <div className="diamond-cursor relative -translate-x-1/2 -translate-y-1/2">
+        {/* Outer diamond */}
+        <span className="diamond-outer absolute top-1/2 left-1/2 w-7 h-7 -translate-x-1/2 -translate-y-1/2 border-[1.5px] border-terracotta/50 rotate-45 transition-all duration-300 ease-out" />
+        {/* Inner diamond */}
+        <span className="diamond-inner absolute top-1/2 left-1/2 w-3 h-3 -translate-x-1/2 -translate-y-1/2 bg-terracotta/80 rotate-45 transition-all duration-250 ease-out" />
       </div>
 
       <style jsx>{`
-        .pinpoint-cursor {
+        .diamond-cursor {
           width: 28px;
           height: 28px;
-          transition: width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                      height 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
-        .cursor-hover .center-dot {
-          width: 4px !important;
-          height: 4px !important;
-          background: white !important;
-        }
-        .cursor-hover .ring-1 {
-          width: 36px !important;
-          height: 36px !important;
+        .cursor-hover .diamond-outer {
+          width: 48px !important;
+          height: 48px !important;
           border-color: rgba(185, 98, 63, 0.9) !important;
+          animation: diamond-spin 2s linear infinite;
         }
-        .cursor-hover .ring-2 {
-          width: 52px !important;
-          height: 52px !important;
-          border-color: rgba(185, 98, 63, 0.4) !important;
+        .cursor-hover .diamond-inner {
+          width: 8px !important;
+          height: 8px !important;
+          background: white !important;
+          animation: diamond-spin-reverse 1.5s linear infinite;
         }
-        /* Ripple pulse on hover */
-        @keyframes ripple {
-          0% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
-          100% { transform: translate(-50%, -50%) scale(1.6); opacity: 0; }
+        @keyframes diamond-spin {
+          from { transform: translate(-50%, -50%) rotate(45deg); }
+          to { transform: translate(-50%, -50%) rotate(405deg); }
         }
-        .cursor-hover .ring-2 {
-          animation: ripple 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+        @keyframes diamond-spin-reverse {
+          from { transform: translate(-50%, -50%) rotate(45deg); }
+          to { transform: translate(-50%, -50%) rotate(-315deg); }
         }
       `}</style>
     </div>
