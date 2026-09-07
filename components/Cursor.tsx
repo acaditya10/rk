@@ -11,11 +11,21 @@ function parseRgb(color: string): [number, number, number] | null {
   return m ? [parseInt(m[1]), parseInt(m[2]), parseInt(m[3])] : null;
 }
 
-function findBgColor(el: HTMLElement | null): string | null {
-  while (el && el !== document.body) {
-    const bg = getComputedStyle(el).backgroundColor;
+function findBgColor(el: Element | null): string | null {
+  let node = el as HTMLElement | null;
+  while (node && node !== document.body) {
+    const style = getComputedStyle(node);
+    // Check backgroundColor
+    const bg = style.backgroundColor;
     if (bg && bg !== "rgba(0, 0, 0, 0)" && bg !== "transparent") return bg;
-    el = el.parentElement;
+    // Check background image (gradients)
+    const bgImg = style.backgroundImage;
+    if (bgImg && bgImg !== "none") {
+      // Extract color from gradient - look for rgb/rgba values
+      const match = bgImg.match(/rgba?\(\d+,\s*\d+,\s*\d+/);
+      if (match) return match[0] + ")";
+    }
+    node = node.parentElement;
   }
   return null;
 }
@@ -26,9 +36,26 @@ function isDark(color: string): boolean {
   return luminance(rgb[0], rgb[1], rgb[2]) < 0.5;
 }
 
+function detectColor(el: HTMLElement, cursorEl: HTMLElement) {
+  const override = el.closest("[data-cursor]");
+  cursorEl.classList.remove("cursor-dark", "cursor-light");
+  if (override) {
+    const val = override.getAttribute("data-cursor");
+    if (val === "dark") cursorEl.classList.add("cursor-dark");
+    else if (val === "light") cursorEl.classList.add("cursor-light");
+  } else {
+    const bg = findBgColor(el);
+    if (bg && isDark(bg)) {
+      cursorEl.classList.add("cursor-light");
+    }
+  }
+}
+
 export default function Cursor() {
   const dotRef = useRef<HTMLDivElement>(null);
   const visible = useRef(false);
+  const lastColorCheck = useRef(0);
+  const lastTarget = useRef<Element | null>(null);
 
   const updateVisibility = useCallback((show: boolean) => {
     if (!dotRef.current) return;
@@ -48,6 +75,15 @@ export default function Cursor() {
     const move = (e: MouseEvent) => {
       el.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
       updateVisibility(true);
+
+      // Throttled color detection on every move
+      const now = performance.now();
+      const target = document.elementFromPoint(e.clientX, e.clientY);
+      if (target && (now - lastColorCheck.current > 80 || target !== lastTarget.current)) {
+        lastColorCheck.current = now;
+        lastTarget.current = target;
+        detectColor(target as HTMLElement, el);
+      }
     };
 
     const over = (e: MouseEvent) => {
@@ -55,32 +91,14 @@ export default function Cursor() {
       if (target.closest("a, button, [data-cursor-hover], input, textarea, select")) {
         el.classList.add("cursor-hover");
       }
-      const override = target.closest("[data-cursor]");
-      el.classList.remove("cursor-dark", "cursor-light");
-      if (override) {
-        const val = override.getAttribute("data-cursor");
-        if (val === "dark") el.classList.add("cursor-dark");
-        else if (val === "light") el.classList.add("cursor-light");
-      } else {
-        const bg = findBgColor(target);
-        if (bg && isDark(bg)) el.classList.add("cursor-light");
-      }
+      detectColor(target, el);
     };
 
     const out = (e: MouseEvent) => {
-      const related = e.relatedTarget as HTMLElement | null;
       el.classList.remove("cursor-hover");
-      el.classList.remove("cursor-dark", "cursor-light");
+      const related = e.relatedTarget as HTMLElement | null;
       if (related) {
-        const override = (related as HTMLElement).closest?.("[data-cursor]");
-        if (override) {
-          const val = override.getAttribute("data-cursor");
-          if (val === "dark") el.classList.add("cursor-dark");
-          else if (val === "light") el.classList.add("cursor-light");
-        } else {
-          const bg = findBgColor(related as HTMLElement);
-          if (bg && isDark(bg)) el.classList.add("cursor-light");
-        }
+        detectColor(related, el);
       }
     };
 
@@ -144,8 +162,6 @@ export default function Cursor() {
                       top 0.25s ease, left 0.25s ease,
                       background 0.25s ease;
         }
-
-        /* Hover: expand */
         .cursor-hover .diamond-outer {
           width: 48px;
           height: 48px;
@@ -165,30 +181,30 @@ export default function Cursor() {
 
         /* Light cursor on dark backgrounds */
         .cursor-light .diamond-outer {
-          border-color: rgba(255, 255, 255, 0.5);
+          border-color: rgba(255, 255, 255, 0.5) !important;
         }
         .cursor-light .diamond-inner {
-          background: rgba(255, 255, 255, 0.8);
+          background: rgba(255, 255, 255, 0.8) !important;
         }
         .cursor-light.cursor-hover .diamond-outer {
-          border-color: rgba(255, 255, 255, 0.9);
+          border-color: rgba(255, 255, 255, 0.9) !important;
         }
         .cursor-light.cursor-hover .diamond-inner {
-          background: rgba(185, 98, 63, 1);
+          background: rgba(185, 98, 63, 1) !important;
         }
 
-        /* Dark cursor on light backgrounds (explicit) */
+        /* Dark cursor for explicit light override */
         .cursor-dark .diamond-outer {
-          border-color: rgba(23, 26, 24, 0.3);
+          border-color: rgba(23, 26, 24, 0.3) !important;
         }
         .cursor-dark .diamond-inner {
-          background: rgba(23, 26, 24, 0.7);
+          background: rgba(23, 26, 24, 0.7) !important;
         }
         .cursor-dark.cursor-hover .diamond-outer {
-          border-color: rgba(23, 26, 24, 0.8);
+          border-color: rgba(23, 26, 24, 0.8) !important;
         }
         .cursor-dark.cursor-hover .diamond-inner {
-          background: white;
+          background: white !important;
         }
 
         @keyframes dspin {
