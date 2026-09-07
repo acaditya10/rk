@@ -4,7 +4,6 @@ import TrustBar from "@/components/TrustBar";
 import Services from "@/components/Services";
 import FeaturedProject from "@/components/FeaturedProject";
 import Process from "@/components/Process";
-import PriceCalculator from "@/components/PriceCalculator";
 import WhyChooseUs from "@/components/WhyChooseUs";
 import Portfolio from "@/components/Portfolio";
 import BeforeAfter from "@/components/BeforeAfter";
@@ -23,7 +22,6 @@ export default function Home() {
         <Services />
         <FeaturedProject />
         <Process />
-        <PriceCalculator />
         <WhyChooseUs />
         <Portfolio />
         <BeforeAfter />
